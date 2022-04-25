@@ -9,5 +9,5 @@ print(
     df.groupby(sys.argv[2])
     .sr_number.nunique()
     .to_frame("unique_service_requests")
-    .to_csv(index=False, line_terminator="\n")
+    .to_csv(index=True, line_terminator="\n")
 )
