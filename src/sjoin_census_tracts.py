@@ -5,7 +5,7 @@ import geopandas as gpd
 import pandas as pd
 from constants import CRS
 
-df = pd.read_csv(sys.stdin)
+df = pd.read_csv(sys.stdin, low_memory=False)
 df = gpd.GeoDataFrame(df, geometry=gpd.points_from_xy(df.longitude, df.latitude))
 df.crs = CRS
 
