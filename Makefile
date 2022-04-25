@@ -24,7 +24,9 @@ output/garbage-related-complaints.csv: \
 		hand/query.sql \
 		src/cleanup_police_beats.py \
 		src/sjoin_census_tracts.py \
-		input/boundaries_census_tracts.geojson
+		input/boundaries_census_tracts.geojson \
+		src/sjoin_neighborhood.py \
+		input/boundaries_neighborhoods.geojson
 	wget --no-check-certificate --quiet \
 		--method GET \
 		--timeout=0 \
@@ -32,7 +34,8 @@ output/garbage-related-complaints.csv: \
 		-O /dev/stdout \
 		'https://data.cityofchicago.org/resource/v6vf-nfxy.csv?$$query=$(shell cat $<)' | \
 		python $(word 2, $^) | \
-		python $(wordlist 3, 4, $^) > $@
+		python $(wordlist 3, 4, $^) | \
+		python $(wordlist 5, 6, $^) > $@
 
 frozen/distinct_311_sr_types.txt:
 	wget --no-check-certificate --quiet \

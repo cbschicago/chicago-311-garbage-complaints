@@ -29,4 +29,7 @@ if args.pop_column is not None:
         agg.unique_service_requests / agg.population * args.pop_size
     )
 
+# add the neighborhood name
+agg = agg.join(gb.pri_neigh.first().to_frame("primary_neighborhood"))
+
 print(agg.to_csv(index=True, line_terminator="\n"))
