@@ -1,5 +1,6 @@
 pandas
 geopandas
+rtree
 pylint
 black
 jupyter
