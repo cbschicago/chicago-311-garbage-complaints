@@ -1,12 +1,13 @@
 SHELL := /bin/bash
-SUBDIRS := $(wildcard */.)
 
-.PHONY: all $(SUBDIRS)
+.PHONY: all
 
-all: $(SUBDIRS)
+all: output/garbage_related_requests_by_police_beat.csv
 
-$(SUBDIRS): venv/bin/activate
-	source $< && $(MAKE) -C $@
+output/garbage_related_requests_by_police_beat.csv: \
+		src/aggregate_data_by_column.py \
+		input/garbage-related-complaints.csv
+	python $^ police_beat > $@
 
 input/garbage-related-complaints.csv: hand/query.sql
 	wget --no-check-certificate --quiet \
@@ -30,6 +31,5 @@ venv/bin/activate: requirements.txt
 	touch $@
 
 cleanup:
-	for d in $(SUBDIRS) ; do \
-		cd "$(shell pwd)/$$d" && make cleanup  ; \
-	done
+	rm input/*
+	rm output/*
