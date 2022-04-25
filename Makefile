@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 
 GENERATED_FILES: \
-		output/garbage_related_requests_by_police_beat.csv \
+		output/garbage_related_requests_by_neighborhood.csv \
 		output/garbage_related_requests_by_census_tract.csv
 
 .PHONY: all
@@ -15,10 +15,10 @@ output/garbage_related_requests_by_census_tract.csv: \
 		output/garbage-related-complaints.csv
 	python $^ census_tract --pop_column tract_population> $@
 
-output/garbage_related_requests_by_police_beat.csv: \
+output/garbage_related_requests_by_neighborhood.csv: \
 		src/aggregate_data_by_column.py \
 		output/garbage-related-complaints.csv
-	python $^ police_beat > $@
+	python $^ pri_neigh > $@
 
 output/garbage-related-complaints.csv: \
 		hand/query.sql \
