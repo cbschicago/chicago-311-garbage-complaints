@@ -8,6 +8,14 @@ all: $(SUBDIRS)
 $(SUBDIRS): venv/bin/activate
 	source $< && $(MAKE) -C $@
 
+frozen/distinct_311_sr_types.txt:
+	wget --no-check-certificate --quiet \
+		--method GET \
+		--timeout=0 \
+		--header 'Host: data.cityofchicago.org' \
+		-O $@ \
+		'https://data.cityofchicago.org/resource/v6vf-nfxy.csv?$$select=DISTINCT SR_TYPE'
+
 venv/bin/activate: requirements.txt
 	if [ ! -f $@ ]; then virtualenv venv; fi
 	source $@ && pip install -r $<
