@@ -3,8 +3,7 @@
 import sys
 import geopandas as gpd
 import pandas as pd
-
-CRS = "EPSG:4326"
+from constants import CRS
 
 df = pd.read_csv(sys.stdin)
 df = gpd.GeoDataFrame(df, geometry=gpd.points_from_xy(df.longitude, df.latitude))
