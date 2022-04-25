@@ -13,7 +13,7 @@ all: $(GENERATED_FILES)
 output/garbage_related_requests_by_census_tract.csv: \
 		src/aggregate_data_by_column.py \
 		output/garbage-related-complaints.csv
-	python $^ census_tract > $@
+	python $^ census_tract --pop_column tract_population> $@
 
 output/garbage_related_requests_by_police_beat.csv: \
 		src/aggregate_data_by_column.py \
