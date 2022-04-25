@@ -1,8 +1,8 @@
 SHELL := /bin/bash
 
 GENERATED_FILES: \
-		output/garbage_related_requests_by_neighborhood.csv \
-		output/garbage_related_requests_by_census_tract.csv
+		output/garbage_related_complaints_by_neighborhood.csv \
+		output/garbage_related_complaints_by_census_tract.csv
 
 .PHONY: all
 
@@ -10,12 +10,12 @@ GENERATED_FILES: \
 
 all: $(GENERATED_FILES)
 
-output/garbage_related_requests_by_census_tract.csv: \
+output/garbage_related_complaints_by_census_tract.csv: \
 		src/aggregate_data_by_column.py \
 		output/garbage-related-complaints.csv
 	python $^ census_tract --pop_column tract_population> $@
 
-output/garbage_related_requests_by_neighborhood.csv: \
+output/garbage_related_complaints_by_neighborhood.csv: \
 		src/aggregate_data_by_column.py \
 		output/garbage-related-complaints.csv
 	python $^ pri_neigh > $@
