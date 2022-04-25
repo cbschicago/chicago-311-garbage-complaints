@@ -9,13 +9,16 @@ output/garbage_related_requests_by_police_beat.csv: \
 		input/garbage-related-complaints.csv
 	python $^ police_beat > $@
 
-input/garbage-related-complaints.csv: hand/query.sql
+input/garbage-related-complaints.csv: \
+		hand/query.sql \
+		src/cleanup_police_beats.py
 	wget --no-check-certificate --quiet \
 		--method GET \
 		--timeout=0 \
 		--header 'Host: data.cityofchicago.org' \
-		-O $@ \
-		'https://data.cityofchicago.org/resource/v6vf-nfxy.csv?$$query=$(shell cat $<)'
+		-O /dev/stdout \
+		'https://data.cityofchicago.org/resource/v6vf-nfxy.csv?$$query=$(shell cat $<)' | \
+		python $(word 2, $^) > $@
 
 frozen/distinct_311_sr_types.txt:
 	wget --no-check-certificate --quiet \
