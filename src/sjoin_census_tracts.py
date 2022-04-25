@@ -3,6 +3,7 @@
 import sys
 import geopandas as gpd
 import pandas as pd
+import util
 from constants import CRS
 
 df = pd.read_csv(sys.stdin, low_memory=False)
@@ -17,5 +18,7 @@ df = gpd.sjoin(df, geo, how="left", predicate="within")
 df["census_tract"] = df.census_tract.apply(
     lambda t: t if pd.notna(t) else "NO CENSUS TRACT FOUND"
 )
+
+df = util.drop_sjoin_indices(df)
 
 print(df.to_csv(index=False, line_terminator="\n"))
